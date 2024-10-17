@@ -10,7 +10,7 @@ cosine difference between the embeddings. The results are presented in a number 
 - [speechbrain/spkrec-xvect-voxceleb](https://huggingface.co/speechbrain/spkrec-xvect-voxceleb)
 - [speechbrain/spkrec-ecapa-voxceleb](https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb)
 - [LanceaKing/spkrec-ecapa-cnceleb](https://huggingface.co/LanceaKing/spkrec-ecapa-cnceleb)
-  - This one is trained on Chinese media, but produces interesing results
+  - This one is trained on Chinese media and is therefore innapropriate, but produces interesing results
 
 # Usage
 
@@ -64,6 +64,22 @@ Some quantiles for the distribuiton of scores is computed. These are useful as t
         <td> 0.682094156742096 </td>
         <td> 0.6995031833648682 </td>
         <td> 0.7450991868972778 </td>
+    </tr>
+    <tr>
+        <td> spkrec-ecapa-voxceleb </td>
+        <td> 0.9659057259559631 </td>
+        <td> 0.9702195525169373 </td>
+        <td> 0.9722887873649597 </td>
+        <td> 0.9744231700897217 </td>
+        <td> 0.9789397716522217 </td>
+    </tr>
+    <tr>
+        <td> spkrec-ecapa-cnceleb </td>
+        <td> 0.4949462413787842 </td>
+        <td> 0.5427722334861755 </td>
+        <td> 0.568801999092102 </td>
+        <td> 0.5973677635192871 </td>
+        <td> 0.6694293022155762 </td>
     </tr>
 </table>
 
