@@ -50,13 +50,16 @@ plt.show()
 
 # Show the E.C.D.F
 ecdf_x = np.sort(scores_flat)
-ecdf_y = np.linspace(0, 1, len(scores_flat))
-plt.plot(ecdf_x, ecdf_y, endpoint=False)
+ecdf_y = np.linspace(0, 1, len(scores_flat), endpoint=False)
+plt.plot(ecdf_x, ecdf_y)
 plt.show()
 
+# Find quantiles
+quantiles = [0.6, 0.7, 0.75, 0.8, 0.9] # ascending order
+for quant in quantiles:
+    print(f'q({quant}) = {np.quantile(ecdf_x, quant)}')
+
 # Fit a model to the E.C.D.F
-counts, bins = np.histogram(scores, bins=10)
-midbins = (bins[1:] + bins[:-1]) / 2
 SQRT_TWO_PI = np.sqrt(2 * np.pi)
 def gaussian(x, A, B):
     y = np.exp(-0.5 * ((x-B)/A)**2) / (A * SQRT_TWO_PI)
@@ -70,15 +73,23 @@ def quartic(x, A, B, C, D, E):
     y = A + B * (x) + C * (x**2) + D * (x**3) + E * (x**4)
     return y
 
-model = gaussian
+def invexp(x, A, B):
+    y = 1 / (1 + np.exp(- A * (x - B)))
+    return y
 
-parameters, covariance = curve_fit(model, midbins, counts)
+def invexp2(x, A, B, C):
+    y = 1 / (1 + C * np.exp(- A * (x - B)))
+    return y
+
+model = invexp
+
+parameters, covariance = curve_fit(model, ecdf_x, ecdf_y)
 print(f'Parameters: {parameters}')
 print(f'Covariance: {covariance}')
 
 # Overlay gaussian curve fit
-plt.stairs(counts, bins)
-x_samp = np.linspace(min(midbins), max(midbins), 1000)
+plt.plot(ecdf_x, ecdf_y)
+x_samp = np.linspace(min(ecdf_x), max(ecdf_x), 1000)
 y_samp = model(x_samp, *parameters)
 plt.plot(x_samp, y_samp)
 plt.show()
